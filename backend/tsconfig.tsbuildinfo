@@ -1,0 +1,1 @@
+{"root":["./src/server.ts","./src/controller/bidcontroller.ts","./src/controller/postcontroller.ts","./src/controller/projectcontroller.ts","./src/controller/usercontroller.ts","./src/middlewares/authorizationmiddleware.ts","./src/routes/apiroutes.ts","./src/routes/userroutes.ts"],"version":"5.7.3"}

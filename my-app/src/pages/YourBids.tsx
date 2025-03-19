@@ -1,15 +1,29 @@
 import { Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { getAllProjectsOfUser } from "../services/projectService";
-import { getAllBidsOfUser } from "../services/BidService";
+import { getAllBidsOfUser, removeBidById } from "../services/BidService";
 
 export const YourBids = () => {
+    const token : string | null = localStorage.getItem('token')
+    if(!token) {window.location.href = "/login";return;}
     const [bids,setBids] = useState([
     
     ])
+    const handleDelete = async (token : string,id : number) => {
+       const res = await removeBidById(token,id)
+       console.log("fromm here",res)
+       if(res) {
+        const newBids = bids.filter((bid : any) => bid.id!=res.response.id );
+        setBids(newBids)
+       }
+      
+    }
     useEffect(() => {
-        const token : string | null = localStorage.getItem('token')
-        if(token)
+        
+        if(!token){
+            window.location.href = "/login"
+            return ;
+        }
         getAllBidsOfUser(token).then(data => setBids(data))
         
     },[])
@@ -42,7 +56,7 @@ export const YourBids = () => {
                                 </div>
                             </td>
                             <td>
-                                <button className="bg-red-500 p-1 rounded-lg text-white "><Trash2></Trash2></button>
+                                <button className="bg-red-500 p-1 rounded-lg text-white " onClick={() => handleDelete(token,bid.id)}><Trash2></Trash2></button>
                             </td>
                         </tr>
                     ))}

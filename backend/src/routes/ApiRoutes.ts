@@ -22,5 +22,5 @@ ApiRouter.post('/projects/create-project', checkAuthorization, createProject); /
 ApiRouter.delete('/projects/:id', checkAuthorization, deleteProjectById);
 // Bid routes
 ApiRouter.post('/bids/place-bid', checkAuthorization, placeBid); // Added bid creation route
-ApiRouter.get('bids/:id',checkAuthorization,removeBidById)
+ApiRouter.delete('/bids/:id',checkAuthorization,removeBidById)
 ApiRouter.get('/bids',checkAuthorization,getAllBidsOfUser)

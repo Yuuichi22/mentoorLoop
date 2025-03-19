@@ -17,7 +17,6 @@ const getAllBidsOfUser = async(token : string) => {
 
  const placeBid = async (token : string,payload : {
     project_id : number,
-    amount : number
 }) => {
     const ADD_BID_URL = import.meta.env.VITE_PLACE_BID_URL;
     const res = await fetch(ADD_BID_URL,{
@@ -30,8 +29,10 @@ const getAllBidsOfUser = async(token : string) => {
     })
     console.log("Logging PlaceBid response From bids service : ",res);
 }
-const removeBidById = async (token:string,project_id : number) => {
-    const REMOVE_BID_URL = import.meta.env.VITE_REMOVE_BID_URL;
+const removeBidById = async (token:string,bid_id : number) => {
+    console.log(bid_id);
+    
+    const REMOVE_BID_URL = `${import.meta.env.VITE_REMOVE_BID_URL}/${bid_id}`;
     const res = await fetch(REMOVE_BID_URL,{
         method : 'DELETE',
         headers : {
@@ -39,6 +40,11 @@ const removeBidById = async (token:string,project_id : number) => {
             'authorization' : `Bearer ${token}`
         },
     })
+    if(res.ok) {
+        const data = await res.json();
+        console.log("Removed  : ",data)
+        return data;
+    }
     console.log("Logging PlaceBid response From bids service : ",res);
 }
-export {getAllBidsOfUser,placeBid}
+export {getAllBidsOfUser,placeBid,removeBidById}

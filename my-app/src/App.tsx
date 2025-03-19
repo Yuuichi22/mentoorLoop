@@ -13,6 +13,7 @@ import { YourBids } from './pages/YourBids'
 import { YourPosts } from './pages/YourPosts'
 import { EditProfile } from './pages/EditProfile'
 import { LandingPage } from './pages/LandingPage'
+import { YourProjects } from './pages/YourProjects'
 function App() {
  const user = {
     firstname : "john",
@@ -38,9 +39,9 @@ function App() {
   
     <BrowserRouter>
 
-          {/*<Nav></Nav>*/}
+          {<Nav></Nav>}
     <Routes>
-      <Route path="" element = {<LandingPage/>} />
+      <Route path="" element = {<Dashboard/>} />
       <Route path="login" element = {<Login/>} />
       <Route path="signup" element = {<SignUp/>} />
       <Route path="publish" element = {<Publish/>} />
@@ -48,6 +49,7 @@ function App() {
       <Route path="/your-bids" element = {<YourBids/>} />
       <Route path="/your-posts" element = {<YourPosts/>} />
       <Route path="/edit-profile" element = {<EditProfile/>} />
+      <Route path="/your-projects" element = {<YourProjects/>} />
     </Routes>
     <FloatingActionBtn/>
     </BrowserRouter>

@@ -25,5 +25,5 @@ exports.ApiRouter.post('/projects/create-project', AuthorizationMiddleware_1.che
 exports.ApiRouter.delete('/projects/:id', AuthorizationMiddleware_1.checkAuthorization, ProjectController_1.deleteProjectById);
 // Bid routes
 exports.ApiRouter.post('/bids/place-bid', AuthorizationMiddleware_1.checkAuthorization, BidController_1.placeBid); // Added bid creation route
-exports.ApiRouter.get('bids/:id', AuthorizationMiddleware_1.checkAuthorization, BidController_1.removeBidById);
+exports.ApiRouter.delete('/bids/:id', AuthorizationMiddleware_1.checkAuthorization, BidController_1.removeBidById);
 exports.ApiRouter.get('/bids', AuthorizationMiddleware_1.checkAuthorization, BidController_1.getAllBidsOfUser);

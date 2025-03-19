@@ -35,6 +35,7 @@ export const Login = () => {
 const onsubmit = async (data : {email : string,password : string}) => {
     const resData = await loginUser(dispatch,data);
     console.log(resData)
+   // window.location.href = '/'
 }
 return (
     <div className='p-20'>

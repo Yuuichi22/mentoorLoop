@@ -1,5 +1,6 @@
 import { useState } from "react"; // Install lucide-react for icons
 import defaultProfile from '../assets/defaultProfile.webp'
+import { placeBid } from "../services/BidService";
 interface projectInterface{
     id : number,
     title : string,
@@ -19,29 +20,9 @@ interface projectInterface{
 
 
 export const ProjectCustomCard = (project : projectInterface) => {
-    // Sample project data
-   /* const project = {
-        author: {
-            name: "John Doe",
-            username: "@johndoe",
-            profilePic: "https://imgs.search.brave.com/QGWw63Ica9HvN7Suem6PrrDkJSarLUsekG1pE-nfPuI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/cHJlbWl1bS1waG90/by9oYW5kc29tZS1t/YW4tbGF1Z2hpbmct/cHVycGxlXzEzNjgt/OTUyMjIuanBnP3Nl/bXQ9YWlzX2h5YnJp/ZA",
-        },
-        title: "Create 2D Animation Using Blender",
-        description: "Required in a time span of 2 days",
-        attachments: [
-            "https://aekqimyqcuyhdjzvoatn.supabase.co/storage/v1/object/public/mentorloop/public/Heleum%20Divyansh%20Certifcate.jpg",
-            "https://imgs.search.brave.com/hJFN_vofbCfE5-ikewG5d-SJ6wlSkqofMgeVIn28WRY/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/cHJlbWl1bS1waG90/by93ZWItcHJvZ3Jh/bW1pbmctY29kZV80/MzMxODItMTAuanBn/P3NlbXQ9YWlzX2h5/YnJpZA",
-        ],
-        tags: ["Blender", "Animation", "2D", "Graphics"],
-        profile: {
-            bio: "@Sophomore | Animation & Vfx",
-            experience: "3 years of experience in animation",
-            skills: ["Blender", "After Effects", "Illustrator"],
-        },
-        isApplied : false
-    };*/
+    const token : string | null = localStorage.getItem('token')
+    if(!token) {window.location.href = "/login";return ;}
     const [isApplied,setIsApplied] = useState(false)
-
     return (
         <div className="p-6 flex flex-col gap-4  rounded-lg shadow-sm w-[80%]">
             {/* Header */}
@@ -87,12 +68,13 @@ export const ProjectCustomCard = (project : projectInterface) => {
                         {
                         !isApplied ? <button className="bg-black text-white pl-3 pr-3 pt-1 pb-1 rounded-xl" onClick={() =>{
                             //project.isApplied = true
+                            placeBid(token,{project_id : project.id})
                             setIsApplied(true)}}>
                         Apply
                     </button> : 
-             <button className="bg-gray  pl-3 pr-3 pt-1 pb-1 rounded-xl" >
+             <div className="bg-gray  pl-3 pr-3 pt-1 pb-1 rounded-xl" >
              Applied!
-         </button>}
+         </div>}
                         
                     </div>
                 </div>

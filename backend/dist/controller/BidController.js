@@ -51,8 +51,8 @@ const placeBid = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.placeBid = placeBid;
 const removeBidById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
-    const project_id = parseInt(req.params.id);
-    if (isNaN(project_id)) {
+    const id = parseInt(req.params.id);
+    if (isNaN(id)) {
         res.status(400).json({ error: "Invalid Bid ID" });
         return;
     }
@@ -65,12 +65,13 @@ const removeBidById = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     const user_id = payload.id;
     console.log('hre re');
     try {
-        const response = yield prisma.bidder.deleteMany({
+        const response = yield prisma.bidder.delete({
             where: {
-                project_id,
+                id,
                 user_id
             }
         });
+        console.log("removed : ", response);
         res.json({ message: "successfully removed bid", response });
     }
     catch (e) {

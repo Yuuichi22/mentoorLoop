@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { getAllPostsOfUser, deletePost, updatePost } from '../services/postService';
+import {  deleteProject, updateProject } from '../services/projectService';
 import { Pencil, Trash2, Save, X, Plus, ImagePlus } from 'lucide-react';
+import { getAllProjectsOfUser } from '../services/projectService';
 
-export const YourPosts = () => {
-    const [posts, setPosts] = useState<any[]>([]);
-    const [editingPostId, setEditingPostId] = useState<number | null>(null);
+export const YourProjects = () => {
+    const [projects, setProjects] = useState<any[]>([]);
+    const [editingprojectId, setEditingprojectId] = useState<number | null>(null);
     const [editContent, setEditContent] = useState<{ 
         title: string; 
         content: string; 
@@ -23,47 +24,47 @@ export const YourPosts = () => {
             return;
         }
         
-        const fetchPosts = async () => {
+        const fetchProjects = async () => {
             try {
-                const data = await getAllPostsOfUser(token);
-                setPosts(data);
+                const data = await getAllProjectsOfUser(token);
+                setProjects(data);
             } catch (error) {
-                console.error('Failed to fetch posts:', error);
+                console.error('Failed to fetch projects:', error);
             }
         };
 
-        fetchPosts();
+        fetchProjects();
     }, [token]);
 
-    const handleDelete = async (postId: number) => {
+    const handleDelete = async (projectId: number) => {
         try {
-            await deletePost(token || " ", postId);
-            setPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId)); // Remove deleted post
+            await deleteProject(token || " ", projectId);
+            setProjects((prevProjects) => prevProjects.filter((project) => project.id !== projectId)); // Remove deleted project
         } catch (error) {
-            console.error('Failed to delete post:', error);
+            console.error('Failed to delete project:', error);
         }
     };
 
-    const handleEdit = (post: any) => {
-        setEditingPostId(post.id);
+    const handleEdit = (project: any) => {
+        setEditingprojectId(project.id);
         setEditContent({ 
-            title: post.title, 
-            content: post.content, 
-            attachments: post.attachments || [], 
-            tags: post.tags || [] 
+            title: project.title, 
+            content: project.content, 
+            attachments: project.attachments || [], 
+            tags: project.tags || [] 
         });
     };
 
-    const handleSave = async (postId: number) => {
+    const handleSave = async (projectId: number) => {
         try {
             
-            const updatedPost = await updatePost(token || " ", postId, editContent);
-            setPosts((prevPosts) =>
-                prevPosts.map((post) => (post.id === postId ? updatedPost.data : post))
+            const updatedproject = await updateProject(token || " ", projectId, editContent);
+            setProjects((prevprojects : any) =>
+                prevprojects.map((project : any) => (project.id === projectId ? updatedproject.data : project))
             );
-            setEditingPostId(null);
+            setEditingprojectId(null);
         } catch (error) {
-            console.error('Failed to update post:', error);
+            console.error('Failed to update project:', error);
         }
     };
 
@@ -103,11 +104,11 @@ export const YourPosts = () => {
 
     return (
         <div className="pt-25 flex flex-col gap-4 items-center">
-            {posts.map((post) => (
-                <div key={post.id} className="p-10 shadow-md rounded-xl w-[80%]">
+            {projects.map((project) => (
+                <div key={project.id} className="p-10 shadow-md rounded-xl w-[80%]">
                     <div className="flex justify-between gap-2">
                         <div className="flex flex-col gap-2 flex-1">
-                            {editingPostId === post.id ? (
+                            {editingprojectId === project.id ? (
                                 <>
                                     <input
                                         type="text"
@@ -181,15 +182,15 @@ export const YourPosts = () => {
                                 </>
                             ) : (
                                 <>
-                                    <div>{post.title}</div>
-                                    <div>{post.content}</div>
+                                    <div>{project.title}</div>
+                                    <div>{project.content}</div>
                                     <div className="flex flex-wrap gap-2">
-                                        {post.attachments?.map((url: string, index: number) => (
+                                        {project.attachments?.map((url: string, index: number) => (
                                             <img key={index} src={url} alt="" className="h-40 w-40 rounded-md" />
                                         ))}
                                     </div>
                                     <div className="flex gap-2">
-                                        {post.tags?.map((tag: string, index: number) => (
+                                        {project.tags?.map((tag: string, index: number) => (
                                             <div key={index} className="bg-gray-200 px-2 rounded-xl p-1">
                                                 {tag}
                                             </div>
@@ -198,21 +199,21 @@ export const YourPosts = () => {
                                 </>
                             )}
                         </div>
-                        {editingPostId === post.id ? (
+                        {editingprojectId === project.id ? (
                             <div className="flex gap-2">
-                                <button onClick={() => handleSave(post.id)} className="text-green-500">
+                                <button onClick={() => handleSave(project.id)} className="text-green-500">
                                     <Save />
                                 </button>
-                                <button onClick={() => setEditingPostId(null)} className="text-red-500">
+                                <button onClick={() => setEditingprojectId(null)} className="text-red-500">
                                     <X />
                                 </button>
                             </div>
                         ) : (
                             <div className="flex gap-2">
-                                <button onClick={() => handleEdit(post)} className="text-blue-500">
+                                <button onClick={() => handleEdit(project)} className="text-blue-500">
                                     <Pencil />
                                 </button>
-                                <button onClick={() => handleDelete(post.id)} className="text-red-500">
+                                <button onClick={() => handleDelete(project.id)} className="text-red-500">
                                     <Trash2 />
                                 </button>
                             </div>

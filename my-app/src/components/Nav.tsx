@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import defaultProfile from '../assets/defaultProfile.webp'
 import logo from '../assets/Logo.svg'
 import { resetUser } from '../app/features/Auth/authSlice'
+import { logout } from '../services/authService'
 export const Nav = () => {
     const dispatch  = useDispatch()
     const [visible,setVisible]  = useState(false);
@@ -29,9 +30,7 @@ export const Nav = () => {
                     <ul>
                         <li><Link to="/profile">profile</Link></li>
                         <li onClick={() => {
-                            localStorage.removeItem('token');
-                            window.location.href = "/login"
-                            dispatch(resetUser())
+                            logout(dispatch)
                         }}>Logout</li>
                     </ul>
            </div>

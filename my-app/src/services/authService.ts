@@ -21,7 +21,7 @@ const loginUser = async (
   const data = await res.json();
   console.log("log from authService",data);
   localStorage.setItem("token", data.token);
-  dispatch(updateUser(data.payload)); // Dispatch action inside function
+  dispatch(updateUser({...data.payload.user,...data.payload.other})); // Dispatch action inside function
 
   return data;
 };

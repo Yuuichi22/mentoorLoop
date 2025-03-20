@@ -30,6 +30,8 @@ export const Dashboard = () => {
             }
         })
         const data = await res.json()
+        console.log(data.posts);
+        
         setContent(data.posts)
     }
     const fetchProjects = async (token : string) =>{
@@ -41,17 +43,18 @@ export const Dashboard = () => {
         const data = await res.json()
         console.log(data.projects)
         setContent(data.projects)
+
     }
   useEffect(()=>{
     const token : string | null = window.localStorage.getItem('token') 
     if(!token) window.location.href = '/login'
     else
-   // if(user.user_type == "STUDENT" && token) {
+    if(user.user_type == "STUDENT" && token) {
         fetchProjects(token)
-    //}
-    //else if(token){
-      //  fetchPosts(token)
-    //}
+    }
+else if(token){
+        fetchPosts(token)
+    }
     },[user])
     return (
         <div className='pt-25 flex flex-col gap-10 items-center'>

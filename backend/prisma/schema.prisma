@@ -26,6 +26,27 @@ model User {
   posts     Post[]
   projects  Project[]
   bids      Bidder[]
+  alumini Alumini?
+  student Student?
+}
+
+model Alumini {
+  id Int @id @default(autoincrement())
+  user_id Int @unique
+  user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  experience String?
+  company String?
+  role String?
+  
+}
+model Student {
+  id Int @id @default(autoincrement())
+  user_id Int @unique
+  user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  university String?
+  batch String?
+  course  String?
+
 }
 
 model Post {

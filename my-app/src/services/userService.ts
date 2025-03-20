@@ -16,7 +16,8 @@ export const updateUser = async (dispatch : AppDispatch, token : string,data : a
    if(res) {
     const resData = await res.json();
     console.log(resData);
-    dispatch(updateUserAction(resData.user))
+    const userData = {...resData.user.user,...resData.user.other}
+    dispatch(updateUserAction(userData))
    }
    
 

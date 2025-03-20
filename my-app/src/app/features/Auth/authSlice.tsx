@@ -10,6 +10,12 @@ interface UserState {
   lastname: string;
   user_type: string;
   email: string;
+  company? : string;
+  university? : string;
+  role? : string;
+  batch? : number;
+  course? : string;
+  experience? : number;
 }
 const persistConfig = {
   key: "root",
@@ -23,6 +29,11 @@ const initialState: UserState = {
   lastname: "default lastname",
   user_type: "STUDENT",
   email: "default@gmail.com",
+  company : "",
+  university : "",
+  role : "",
+  experience : 0,
+  batch : 0,
 };
 
 const authSlice = createSlice({

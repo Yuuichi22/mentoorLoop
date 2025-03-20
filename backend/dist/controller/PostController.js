@@ -19,7 +19,14 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const prisma = new client_1.PrismaClient();
 const getAllPosts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const response = yield prisma.post.findMany();
+        const response = yield prisma.post.findMany({
+            select: {
+                id: true,
+                title: true,
+                content: true,
+                user: true
+            }
+        });
         res.json({ posts: response });
     }
     catch (error) {

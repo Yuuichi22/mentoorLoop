@@ -6,7 +6,14 @@ const prisma = new PrismaClient();
 
 export const getAllPosts = async (req: Request, res: Response) => {
     try {
-        const response = await prisma.post.findMany();
+        const response = await prisma.post.findMany({
+            select : {
+                id : true,
+                title : true,
+                content : true,
+                user : true
+            }
+        });
         res.json({ posts: response });
     } catch (error) {
         res.status(500).json({ message: "Failed to fetch posts" ,error});

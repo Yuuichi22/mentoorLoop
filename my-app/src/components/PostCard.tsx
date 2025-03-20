@@ -1,21 +1,24 @@
 import {CardWrapper} from './CardWrapper';
 
-export const PostCard = ({id,title,content} : {
+export const PostCard = ({id,title,content,tags,user} : {
     id : number,
     title : string,
     content : string,
-    //author : string,
-    //tags : string[]
+    user : any
+    tags : string[]
 }) => {
     console.log('Posts')
     return (
     <CardWrapper url =  {`posts/${id}`}>
+         <div className="text-gray-500">
+           @{user.firstname}
+           <br />
+           {user.bio}
+        </div>
          <div className="text-lg font-semibold">
             {title}
         </div>
-        <div className="text-gray-500">
-           "@{/*author*/}"
-        </div>
+       
         <div className="text-sm">
             {content}
         </div>
